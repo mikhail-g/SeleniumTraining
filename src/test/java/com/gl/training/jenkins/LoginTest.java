@@ -7,33 +7,58 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class LoginTest {
 
+    WebElement loginForm;
+    WebElement userField;
+    WebElement passwordField;
+
     private FirefoxDriver driver;
-    private String url = "http://dou.ua/";
-    private String text = "test";
-    String resultsLocator = "class=gsc-results gsc-webResult";
-    String expectedUrl = "http://dou.ua/search/?q="+text;
+    private String baseUrl = "http://localhost:8080";
+    private String loginUrlPart = "/login?from=%2F";
+    String expectedUrl = "";
+
+    private String alphaNum = "TEst12";
+    private String specChar = "!@#$%^&*()_+";
+    private String longText50 = "asdfghjkloasdfghjkloasdfghjkloasdfghjkloasdfghjkloasdfghjklo";
+    private String localizationText = "АукцЫон";
+    private String emptyText = "";
+    private String startsFromSpace = "  11Dd";
+    private String text = "asdfg";
+
+    private String formLocatorName = "login";
+    private String userLocatorName = "j_username";
+    private String passwordLocatorName = "j_password";
 
 
     @BeforeClass
-    public void setUp(){
+    public void startDriver(){
         driver = new FirefoxDriver();
     }
 
+    @BeforeMethod
+    public void setUp(){
+        driver.get(baseUrl+loginUrlPart);
+        loginForm = driver.findElementByClassName(formLocatorName);
+        userField = driver.findElement(By.name(userLocatorName));
+        passwordField = driver.findElement(By.name(passwordLocatorName));
+    }
     @Test
     public void myFirstTest(){
-        driver.get(url);
-
-        WebElement searchForm = driver.findElementByClassName("search");
-        WebElement searchField = searchForm.findElement(By.id("txtGlobalSearch"));
-        searchField.clear();
-        searchField.sendKeys(text);
-        searchForm.submit();
+        submitLogin(alphaNum, specChar);
         String currentUrl = driver.getCurrentUrl();
-        Assert.assertTrue(currentUrl.equals(expectedUrl), "Current url is: " + currentUrl + ", but expected url is: " + expectedUrl);
+        Assert.assertTrue(currentUrl.equals(expectedUrl), "Current baseUrl is: " + currentUrl + ", but expected baseUrl is: " + expectedUrl);
+    }
+
+    public void submitLogin(String name, String password){
+        userField.clear();
+        userField.sendKeys(name);
+        passwordField.clear();
+        passwordField.sendKeys(password);
+        loginForm.submit();
     }
 
     @AfterClass
