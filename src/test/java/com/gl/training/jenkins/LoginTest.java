@@ -2,15 +2,16 @@ package com.gl.training.jenkins;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class LoginTest {
 
@@ -22,6 +23,7 @@ public class LoginTest {
     private String baseUrl = "http://seltr-kbp1-1.synapse.com:8080";
     private String loginUrlPart = "/login?from=%2F";
     private String loginErrorUrlPart = "/loginError";
+    private String loginSuccessUrlPart = "/securityRealm/createAccount";
 
     private String alphaNum = "TEst12";
     private String specChar = "!@#$%^&*()_+";
@@ -34,6 +36,8 @@ public class LoginTest {
     private String formLocatorName = "login";
     private String userLocatorName = "j_username";
     private String passwordLocatorName = "j_password";
+    private String loggedInFullNameLocatorXpath = "//a[@class='model-link inside inverse']/b";
+
 
 
     @BeforeClass
@@ -43,6 +47,7 @@ public class LoginTest {
 
     @BeforeMethod
     public void setUp(){
+        driver.manage().deleteAllCookies();
         driver.get(baseUrl + loginUrlPart);
         loginForm = driver.findElement(By.name(formLocatorName));
         userField = driver.findElement(By.name(userLocatorName));
@@ -52,7 +57,7 @@ public class LoginTest {
     @Test
     public void negativeTest(){
         submitLogin(alphaNum, specChar);
-        verifyCurrentUrl(baseUrl + loginErrorUrlPart);
+        verifyCurrentUrl(driver, baseUrl + loginErrorUrlPart);
         WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel-content']/div"));
         String actualErrorMessage = (txtErrorMessage.getText().split("\n"))[0];
         String expectedErrorMessage = "Invalid login information. Please try again.";
@@ -63,10 +68,13 @@ public class LoginTest {
     @Test
     public void positiveTest(){
         submitLogin(alphaNum, specChar);
-        verifyCurrentUrl(baseUrl + loginErrorUrlPart);
+        verifyCurrentUrl(driver, baseUrl + loginSuccessUrlPart);
+
+
     }
 
-    public void verifyCurrentUrl(String expectedUrl){
+    //TODO make static and move to util
+    public void verifyCurrentUrl(WebDriver driver, String expectedUrl){
         String currentUrl = driver.getCurrentUrl();
         assertTrue(currentUrl.equals(expectedUrl),
                 "Current URL is: '" + currentUrl + "', but expected URL is: '" + expectedUrl + "'!");

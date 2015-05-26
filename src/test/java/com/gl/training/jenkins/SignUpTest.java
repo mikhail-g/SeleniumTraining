@@ -25,6 +25,7 @@ public class SignUpTest {
     private String baseUrl = "http://seltr-kbp1-1.synapse.com:8080";
     private String signUpUrlPart = "/signup";
     private String loginErrorUrlPart = "/loginError";
+    private String signUpSuccessUrlPart = "/securityRealm/createAccount";
 
     private String formSignUpLocatorXpath = "//form[@action='/securityRealm/createAccount']";
     private String inputUserNameLocatorName = "username";
@@ -32,6 +33,8 @@ public class SignUpTest {
     private String inputConfirmPasswordLocatorName = "password2";
     private String inputFullNameLocatorName = "fullname";
     private String inputEmailLocatorName = "email";
+    private String successMessageLocator = "//div[@id='main-panel-content']/h1";
+    private String loggedInFullNameLocatorXpath = "//a[@class='model-link inside inverse']/b";
 
     private String alphaNum = "TEst12";
     private String specChar = "!@#$%^&*()_+";
