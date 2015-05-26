@@ -4,24 +4,34 @@ package com.gl.training.jenkins;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
-public class LoginTest {
+public class SignUpTest {
 
-    WebElement loginForm;
-    WebElement userField;
+    WebElement signUpForm;
+    WebElement userNameField;
     WebElement passwordField;
+    WebElement confirmPasswordField;
+    WebElement fullNameField;
+    WebElement emailField;
 
     private FirefoxDriver driver;
     private String baseUrl = "http://seltr-kbp1-1.synapse.com:8080";
-    private String loginUrlPart = "/login?from=%2F";
+    private String signUpUrlPart = "/signup";
     private String loginErrorUrlPart = "/loginError";
+
+    private String formSignUpLocatorXpath = "//form[@action='/securityRealm/createAccount']";
+    private String inputUserNameLocatorName = "username";
+    private String inputPasswordLocatorName = "password1";
+    private String inputConfirmPasswordLocatorName = "password2";
+    private String inputFullNameLocatorName = "fullname";
+    private String inputEmailLocatorName = "email";
 
     private String alphaNum = "TEst12";
     private String specChar = "!@#$%^&*()_+";
@@ -31,10 +41,6 @@ public class LoginTest {
     private String startsFromSpace = "  11Dd";
     private String text = "asdfg";
 
-    private String formLocatorName = "login";
-    private String userLocatorName = "j_username";
-    private String passwordLocatorName = "j_password";
-
 
     @BeforeClass
     public void startDriver(){
@@ -43,15 +49,18 @@ public class LoginTest {
 
     @BeforeMethod
     public void setUp(){
-        driver.get(baseUrl + loginUrlPart);
-        loginForm = driver.findElement(By.name(formLocatorName));
-        userField = driver.findElement(By.name(userLocatorName));
-        passwordField = driver.findElement(By.name(passwordLocatorName));
+        driver.get(baseUrl + signUpUrlPart);
+        signUpForm = driver.findElement(By.xpath(formSignUpLocatorXpath));
+        userNameField = driver.findElement(By.name(inputUserNameLocatorName));
+        passwordField = driver.findElement(By.name(inputPasswordLocatorName));
+        confirmPasswordField = driver.findElement(By.name(inputConfirmPasswordLocatorName));
+        fullNameField = driver.findElement(By.name(inputFullNameLocatorName));
+        emailField = driver.findElement(By.name(inputEmailLocatorName));
     }
 
     @Test
     public void negativeTest(){
-        submitLogin(alphaNum, specChar);
+        submitSignUp(alphaNum, specChar);
         verifyCurrentUrl(baseUrl + loginErrorUrlPart);
         WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel-content']/div"));
         String actualErrorMessage = (txtErrorMessage.getText().split("\n"))[0];
@@ -62,7 +71,7 @@ public class LoginTest {
 
     @Test
     public void positiveTest(){
-        submitLogin(alphaNum, specChar);
+        submitSignUp(alphaNum, specChar);
         verifyCurrentUrl(baseUrl + loginErrorUrlPart);
     }
 
@@ -72,12 +81,12 @@ public class LoginTest {
                 "Current URL is: '" + currentUrl + "', but expected URL is: '" + expectedUrl + "'!");
     }
 
-    public void submitLogin(String name, String password){
-        userField.clear();
-        userField.sendKeys(name);
+    public void submitSignUp(String name, String password){
+        userNameField.clear();
+        userNameField.sendKeys(name);
         passwordField.clear();
         passwordField.sendKeys(password);
-        loginForm.submit();
+        signUpForm.submit();
     }
 
     @AfterClass
