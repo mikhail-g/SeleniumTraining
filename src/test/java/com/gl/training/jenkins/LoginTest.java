@@ -29,7 +29,7 @@ public class LoginTest {
     private String localizationText = "АукцЫон";
     private String emptyText = "";
     private String startsFromSpace = "  11Dd";
-    private String text = "asdfg";
+    private String text = "asdfga";
 
     private String formLocatorName = "login";
     private String userLocatorName = "j_username";
