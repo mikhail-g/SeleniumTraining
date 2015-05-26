@@ -12,10 +12,17 @@ import org.testng.annotations.Test;
 public class LoginTest {
 
     private FirefoxDriver driver;
-    private String url = "http://dou.ua/";
+    private String baseUrl = "http://seltr-kbp1-1.synapse.com:8080";
+    private String loginUrlPart = "/login?from=%2F";
+
+    private String formLoginLocatorName = "login";
+    private String inputUserLocatorName = "j_username";
+    private String inputPasswordLocatorName = "j_password";
+
     private String text = "test";
-    String resultsLocator = "class=gsc-results gsc-webResult";
-    String expectedUrl = "http://dou.ua/search/?q="+text;
+    private String expectedUrl = "http://dou.ua/search/?q="+text;
+    private String loginErrorUrl = "/loginError";
+
 
 
     @BeforeClass
@@ -25,15 +32,21 @@ public class LoginTest {
 
     @Test
     public void myFirstTest(){
-        driver.get(url);
+        driver.get(baseUrl+loginUrlPart);
 
-        WebElement searchForm = driver.findElementByClassName("search");
-        WebElement searchField = searchForm.findElement(By.id("txtGlobalSearch"));
-        searchField.clear();
-        searchField.sendKeys(text);
-        searchForm.submit();
+        WebElement loginForm = driver.findElementByClassName(formLoginLocatorName);
+        WebElement userField = loginForm.findElement(By.name(inputUserLocatorName));
+        WebElement passwordField = loginForm.findElement(By.name(inputPasswordLocatorName));
+
+        userField.clear();
+        userField.sendKeys(text);
+
+        passwordField.clear();
+        passwordField.sendKeys(text);
+        loginForm.submit();
+
         String currentUrl = driver.getCurrentUrl();
-        Assert.assertTrue(currentUrl.equals(expectedUrl), "Current url is: " + currentUrl + ", but expected url is: " + expectedUrl);
+        Assert.assertTrue(currentUrl.equals(baseUrl+loginErrorUrl), "Current baseUrl is: " + currentUrl + ", but expected baseUrl is: " + expectedUrl);
     }
 
     @AfterClass
