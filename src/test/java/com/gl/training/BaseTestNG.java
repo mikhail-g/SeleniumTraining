@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 
 public class BaseTestNG {
     protected String alphaNum = "2TEst42";
@@ -40,5 +41,37 @@ public class BaseTestNG {
         if (doClear){we.clear();}
         we.sendKeys(text);
         return we;
+    }
+
+    @DataProvider
+    public Object[][] positiveLoginData(){
+        return new Object[][]{
+                {alphaNum, anyCharSet, "All allowed characters validation"}
+        };
+    }
+
+    @DataProvider
+    public Object[][] negativeLoginData(){
+        return new Object[][]{
+                {lessThreeChar, lessThreeChar, "Failed sign up user login"},
+                {lessThreeChar, anyCharSet, "Login with wrong name"},
+                {alphaNum, lessThreeChar, "Login with wrong password"},
+                {emptyText, anyCharSet, "Login with empty name"},
+                {alphaNum, emptyText, "Login with empty password"}
+        };
+    }
+
+    @DataProvider
+    public Object[][] positiveSignUpData(){
+        return new Object[][]{
+                {}
+        };
+    }
+
+    @DataProvider
+    public Object[][] negativeSignUpData(){
+        return new Object[][]{
+                {}
+        };
     }
 }
