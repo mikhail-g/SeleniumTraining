@@ -1,10 +1,13 @@
 package com.gl.training.pages;
 
+import com.gl.training.Settings;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import static com.gl.training.Settings.*;
 import static com.gl.training.utils.CommonOperations.*;
 
 public class SignUpPage extends LoadableComponent<SignUpPage> {
@@ -46,7 +49,12 @@ public class SignUpPage extends LoadableComponent<SignUpPage> {
 
     @Override
     protected void load() {
+        driver.get(getExpectedUrl());
+    }
 
+    @NotNull
+    public String getExpectedUrl() {
+        return getBaseUrl() + signUpUrlPart;
     }
 
     @Override

@@ -2,15 +2,29 @@ package com.gl.training.utils;
 
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import static org.testng.Assert.assertTrue;
 
 public class CommonOperations {
 
-    //TODO make static and move to util
     public static void verifyCurrentUrl(WebDriver driver, String expectedUrl){
         String currentUrl = driver.getCurrentUrl();
         assertTrue(currentUrl.equals(expectedUrl),
                 "Current URL is: '" + currentUrl + "', but expected URL is: '" + expectedUrl + "'!");
+    }
+
+    public static void log(String message){
+        System.out.println("[info]: " + message);
+    }
+
+    public static WebElement sendKeys(WebElement we, String text){
+        return sendKeys(we, text, true);
+    }
+
+    public static WebElement sendKeys(WebElement we, String text, boolean doClear){
+        if (doClear){we.clear();}
+        we.sendKeys(text);
+        return we;
     }
 }
