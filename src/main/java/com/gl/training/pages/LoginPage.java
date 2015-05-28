@@ -4,15 +4,15 @@ import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.testng.Assert;
 
 import static com.gl.training.Settings.getBaseUrl;
 import static com.gl.training.utils.CommonOperations.sendKeys;
 
-public class LoginPage extends LoadableComponent<LoginPage> {
+public class LoginPage extends Page<LoginPage> {
 
-    private WebDriver driver;
+//    private WebDriver driver;
+
 
     @FindBy(name = "login")
     private WebElement loginForm;
@@ -23,18 +23,29 @@ public class LoginPage extends LoadableComponent<LoginPage> {
     @FindBy(name = "j_password")
     private WebElement passwordField;
 
-    private String loginUrlPart = "/login?from=%2F";
+    private static String loginUrlPart = "/login";
 
     @NotNull
-    public String getExpectedUrl() {
+    public static String getExpectedUrl() {
         return getBaseUrl() + loginUrlPart;
     }
 
     public LoginPage(WebDriver driver) {
-        this.driver=driver;
+        super(driver);
+    }
+
+    @Override
+    public String getPageURL() {
+        return wd.getCurrentUrl();
+    }
+
+    @Override
+    protected void checkUniqueElements() throws Error {
+        //TODO add
     }
 
     public void submitLogin(String name, String password) {
+        log.info("Try to login with name: '" + name + "', password: '" + password + "'");
         sendKeys(userField, name);
         sendKeys(passwordField, password);
         loginForm.submit();
@@ -42,12 +53,18 @@ public class LoginPage extends LoadableComponent<LoginPage> {
 
     @Override
     protected void load() {
-        driver.get(getExpectedUrl());
+        wd.get(
+                getExpectedUrl());
     }
 
     @Override
     protected void isLoaded() throws Error {
-        String url = driver.getCurrentUrl();
-        Assert.assertTrue(url.endsWith(loginUrlPart), "Expected URL: "+getExpectedUrl()+" actual URL: " + url);
+        try{
+//            URL actualUrl = new URL(wd.getCurrentUrl());
+            String url = wd.getCurrentUrl();
+//            actualUrl.
+        Assert.assertTrue(url.equals(getExpectedUrl()), "Expected URL: "+getExpectedUrl()+" actual URL: " + url);
+        }catch(Exception e){throw new Error(this.getClass()+" is not loaded");}
     }
+
 }

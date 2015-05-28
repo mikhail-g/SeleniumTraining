@@ -1,13 +1,18 @@
 package com.gl.training;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 
+import java.util.Date;
+
 public class BaseTestNG {
 
-    protected FirefoxDriver driver;
+    protected final Logger log = LogManager.getLogger(this);
+    protected FirefoxDriver driver = null;
 
     protected String text = "asdfga";
     protected String alphaNum = "2TEst42";
@@ -19,9 +24,12 @@ public class BaseTestNG {
     protected String startsFromSpace = "  11Dd";
     protected String localizationText = "АукцЫон";
 
+    private String uniqueName;
+
     @BeforeClass
     public void startDriver(){
         driver = new FirefoxDriver();
+        setUniqueName();
     }
 
     @AfterClass
@@ -29,10 +37,20 @@ public class BaseTestNG {
         driver.quit();
     }
 
+    public String setUniqueName(){
+        String name = alphaNum+new Date().getTime();
+        log.info("Unique name is: "+ name);
+        return uniqueName = name;
+    }
+
+    public String getUniqueName() {
+        return uniqueName;
+    }
+
     @DataProvider
     public Object[][] positiveLoginData(){
         return new Object[][]{
-                {alphaNum, anyCharSet, "All allowed characters validation"}
+                {getUniqueName(), anyCharSet, "All allowed characters validation"}
         };
     }
 
@@ -50,14 +68,14 @@ public class BaseTestNG {
     @DataProvider
     public Object[][] positiveSignUpData(){
         return new Object[][]{
-                {}
+                {getUniqueName(), anyCharSet, anyCharSet, getUniqueName(), "@", "Sign up with valid data"}
         };
     }
 
     @DataProvider
     public Object[][] negativeSignUpData(){
         return new Object[][]{
-                {}
+                {alphaNum, alphaNum, alphaNum, alphaNum, alphaNum, "Sign up with invalid data"}
         };
     }
 

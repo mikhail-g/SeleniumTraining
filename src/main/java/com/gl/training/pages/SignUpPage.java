@@ -1,18 +1,15 @@
 package com.gl.training.pages;
 
-import com.gl.training.Settings;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.LoadableComponent;
+import org.testng.Assert;
 
-import static com.gl.training.Settings.*;
-import static com.gl.training.utils.CommonOperations.*;
+import static com.gl.training.Settings.getBaseUrl;
+import static com.gl.training.utils.CommonOperations.sendKeys;
 
-public class SignUpPage extends LoadableComponent<SignUpPage> {
-
-    private WebDriver driver;
+public class SignUpPage extends Page<SignUpPage> {
 
     @FindBy(xpath = "//form[@action='/securityRealm/createAccount']")
     private WebElement signUpForm;
@@ -33,23 +30,25 @@ public class SignUpPage extends LoadableComponent<SignUpPage> {
     private WebElement emailField;
 
     public SignUpPage(WebDriver driver){
-        this.driver=driver;
+        super(driver);
+    }
+
+    @Override
+    public String getPageURL() {
+        return wd.getCurrentUrl();
+    }
+
+    @Override
+    protected void checkUniqueElements() throws Error {
+        //TODO add
     }
 
     //url:
-    String signUpUrlPart = "/signup";
-
-    /*//locator:
-    String formSignUpLocatorXpath = "//form[@action='/securityRealm/createAccount']";
-    String inputUserNameLocatorName = "username";
-    String inputPasswordLocatorName = "password1";
-    String inputConfirmPasswordLocatorName = "password2";
-    String inputFullNameLocatorName = "fullname";
-    String inputEmailLocatorName = "email";*/
+    private String signUpUrlPart = "/signup";
 
     @Override
     protected void load() {
-        driver.get(getExpectedUrl());
+        wd.get(getExpectedUrl());
     }
 
     @NotNull
@@ -59,10 +58,13 @@ public class SignUpPage extends LoadableComponent<SignUpPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        String url = getPageURL();
+        Assert.assertTrue(url.startsWith(getExpectedUrl()), "Expected URL: " + getExpectedUrl() + " actual URL: " + url);
     }
 
     public void submitSignUp(String name, String password, String confirmPassword, String fullName, String email) {
+        log.info("Try to sign up with name: '" + name + "', password: '" + password +
+                "', confirm password: '" + confirmPassword+"', full name: '" + fullName+"', email: '"+email+"'");
         sendKeys(userNameField, name);
         sendKeys(passwordField, password);
         sendKeys(confirmPasswordField, confirmPassword);
