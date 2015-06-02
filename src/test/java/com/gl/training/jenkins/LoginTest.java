@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.gl.training.utils.CommonOperations.log;
 import static com.gl.training.utils.CommonOperations.verifyCurrentUrl;
 import static com.gl.training.utils.DataProvider.getBaseUrl;
 import static org.testng.Assert.assertEquals;

@@ -1,8 +1,5 @@
 package com.gl.training.pages;
 
-import org.openqa.selenium.WebDriver;
-
-<<<<<<< HEAD
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

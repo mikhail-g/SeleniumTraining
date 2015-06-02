@@ -46,6 +46,7 @@ public class BaseTestNG {
 
     public String getUniqueName() {
         return uniqueName;
+    }
 
     private String getUniqueUsername(){
         Date date = new Date();
