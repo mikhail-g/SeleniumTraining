@@ -1,5 +1,6 @@
 package com.gl.training.pages;
 
+import com.gl.training.entities.User;
 import com.gl.training.pages.pageparts.Header;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
@@ -53,17 +54,22 @@ public class LoginPage extends Page<LoginPage> {
         //TODO add
     }
 
-    public void submitLogin(String name, String password) {
+    public LoginPage submitLogin(String name, String password) {
         log.info("Try to login with name: '" + name + "', password: '" + password + "'");
         sendKeys(userField, name);
         sendKeys(passwordField, password);
         loginForm.submit();
+        return this;
     }
+
+    public LoginPage submitLogin(User user){
+        return submitLogin(user.getName(), user.getPassword());
+    }
+
 
     @Override
     protected void load() {
-        wd.get(
-                getExpectedUrl());
+        wd.get(getExpectedUrl());
     }
 
     @Override

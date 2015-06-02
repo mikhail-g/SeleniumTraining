@@ -7,11 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class UserProfileDeletePage extends Page {
+public class UserProfileDeletePage extends Page<UserProfileDeletePage> {
     private User user;
 
 
-    @FindBy(id = "yui-gen0-button")
+    @FindBy(id = "yui-gen1-button")
     private WebElement yesButton;
 
     @FindBy(name = "delete")

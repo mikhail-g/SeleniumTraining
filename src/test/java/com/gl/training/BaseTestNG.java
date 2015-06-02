@@ -1,10 +1,10 @@
 package com.gl.training;
 
+import com.gl.training.entities.User;
 import com.gl.training.utils.web.WebDriverController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -41,7 +41,7 @@ public class BaseTestNG {
     }
 
     public String setUniqueName(){
-        String name = alphaNum+new Date().getTime();
+        String name = "User#"+new Date().getTime();
         log.info("Unique name is: "+ name);
         return uniqueName = name;
     }
@@ -50,10 +50,6 @@ public class BaseTestNG {
         return uniqueName;
     }
 
-    private String getUniqueUsername(){
-        Date date = new Date();
-        return "User#"+date;
-    }
 
     protected void deleteAllCookies() {
         driver.manage().deleteAllCookies();
@@ -79,17 +75,17 @@ public class BaseTestNG {
 
     @DataProvider
     public Object[][] positiveSignUpData(){
-        String uniqueName = getUniqueUsername();
         return new Object[][]{
-                {uniqueName, specChar, specChar, uniqueName, validEmail, "Valid sign up"}
+                {new User(setUniqueName(), specChar, getUniqueName(), validEmail), specChar, "Valid sign up"}
         };
     }
 
     @DataProvider
     public Object[][] negativeSignUpData(){
-        String uniqueName = getUniqueUsername();
         return new Object[][]{
-                {uniqueName, specChar, "", uniqueName, validEmail, "Invalid sign up. Empty confirm password field"}
+                {new User("", specChar, setUniqueName(), validEmail), specChar, "User name is required", "Invalid sign up. Empty username field"},
+                {new User(setUniqueName(), specChar, getUniqueName(), validEmail), "", "Password didnt match", "Invalid sign up. Empty confirm password field"},
+                {new User(setUniqueName(), specChar, getUniqueName(), text), specChar, "Invalid e-mail address", "Invalid sign up. Invalid email field"}
         };
     }
 }

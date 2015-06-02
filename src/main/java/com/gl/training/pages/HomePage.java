@@ -2,10 +2,13 @@ package com.gl.training.pages;
 
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 import static com.gl.training.utils.DataProvider.getBaseUrl;
+import static org.testng.Assert.assertTrue;
 
-public class HomePage extends Page{
+public class HomePage extends Page<HomePage>{
 
 //    @FindAll()
 
@@ -13,13 +16,16 @@ public class HomePage extends Page{
         super(wd);
     }
 
+    @FindBy(className = "dashboard")
+    private WebElement dashboard;
+
     @Override
     public String getPageURL() {
         return getBaseUrl();
     }
 
     @Override
-    protected void checkUniqueElements() throws Error {
-
+    public void checkUniqueElements() throws Error {
+        assertTrue(dashboard.isDisplayed());
     }
 }

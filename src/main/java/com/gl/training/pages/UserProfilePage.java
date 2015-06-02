@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class UserProfilePage extends Page {
+public class UserProfilePage extends Page<UserProfilePage> {
     private User user;
 
     @FindBy(xpath = "//div[@id='main-panel-content']/h1")
@@ -16,7 +16,7 @@ public class UserProfilePage extends Page {
     @FindBy(xpath = "//div[@id='main-panel-content']/div[2]")
     private WebElement userId;
 
-    @FindBy(className = "task-icon-link")
+    @FindBy(xpath = "//a[contains(@href, '/delete')]")
     private WebElement deleteButton;
 
     public UserProfilePage(WebDriver wd, User user) {
