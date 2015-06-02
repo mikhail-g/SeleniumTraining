@@ -24,6 +24,7 @@ public class LoginTest extends BaseTestNG {
     public void setUp(){
         deleteAllCookies();
         loginPage = new LoginPage(driver).get();
+        loginPage.waitForPageLoaded();
     }
 
     @Test(dataProvider = "negativeLoginData")

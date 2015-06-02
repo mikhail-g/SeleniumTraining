@@ -1,7 +1,10 @@
 package com.gl.training.jenkins;
 
 import com.gl.training.BaseTestNG;
+import com.gl.training.entities.User;
 import com.gl.training.pages.SignUpPage;
+import com.gl.training.pages.UserProfileDeletePage;
+import com.gl.training.pages.UserProfilePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
@@ -28,6 +31,7 @@ public class SignUpTest extends BaseTestNG {
     public void setUp() {
         deleteAllCookies();
         signUpPage = new SignUpPage(driver).get();
+        signUpPage.waitForPageLoaded();
     }
 
     @Test(dataProvider = "negativeSignUpData")
@@ -50,4 +54,14 @@ public class SignUpTest extends BaseTestNG {
         verifyCurrentUrl(driver, signUpPage.getPageURL());
     }
 
+    @Test(dependsOnMethods = "positiveTest", dataProvider = "positiveSignUpData")
+    public void deleteUser(String name, String password, String confirmPassword,
+                           String fullName, String email, String logMessage){
+        log.info("Try to delete created users");
+        User user = new User(name, password, fullName, email);
+        signUpPage.getHeader().submitTextToSearch(name);
+        UserProfilePage userProfilePage = new UserProfilePage(driver, user);
+        UserProfileDeletePage userProfileDeletePage = userProfilePage.clickDelete();
+        userProfileDeletePage.submitDeletion();
+    }
 }

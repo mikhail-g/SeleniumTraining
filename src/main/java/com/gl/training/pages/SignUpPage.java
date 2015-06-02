@@ -1,5 +1,6 @@
 package com.gl.training.pages;
 
+import com.gl.training.pages.pageparts.Header;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,9 +30,16 @@ public class SignUpPage extends Page<SignUpPage> {
     @FindBy(name = "email")
     private WebElement emailField;
 
-    public SignUpPage(WebDriver driver){
-        super(driver);
+    public SignUpPage(WebDriver wd){
+        super(wd);
+        this.header = new Header(wd);
     }
+
+    public Header getHeader() {
+        return header;
+    }
+
+    private Header header;
 
     @Override
     public String getPageURL() {
@@ -44,7 +52,11 @@ public class SignUpPage extends Page<SignUpPage> {
     }
 
     //url:
-    private String signUpUrlPart = "/signup";
+    private static String signUpUrlPart = "/signup";
+
+    public static String getSignUpUrlPart() {
+        return signUpUrlPart;
+    }
 
     @Override
     protected void load() {
@@ -62,10 +74,6 @@ public class SignUpPage extends Page<SignUpPage> {
         Assert.assertTrue(url.startsWith(getExpectedUrl()), "Expected URL: " + getExpectedUrl() + " actual URL: " + url);
     }
 
-    public String getSignUpUrlPart() {
-        return signUpUrlPart;
-    }
-
     public void submitSignUp(String name, String password, String confirmPassword, String fullName, String email) {
         log.info("Try to sign up with name: '" + name + "', password: '" + password +
                 "', confirm password: '" + confirmPassword+"', full name: '" + fullName+"', email: '"+email+"'");
@@ -75,5 +83,10 @@ public class SignUpPage extends Page<SignUpPage> {
         sendKeys(fullNameField, fullName);
         sendKeys(emailField, email);
         signUpForm.submit();
+    }
+
+    public SignUpPage waitForPageLoaded() {
+        waitForElementClickable(userNameField);
+        return this;
     }
 }

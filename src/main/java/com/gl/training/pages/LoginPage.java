@@ -1,5 +1,6 @@
 package com.gl.training.pages;
 
+import com.gl.training.pages.pageparts.Header;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,6 +11,12 @@ import static com.gl.training.utils.CommonOperations.sendKeys;
 import static com.gl.training.utils.DataProvider.getBaseUrl;
 
 public class LoginPage extends Page<LoginPage> {
+
+    public Header getHeader() {
+        return header;
+    }
+
+    private Header header;
 
     @FindBy(name = "login")
     private WebElement loginForm;
@@ -29,9 +36,10 @@ public class LoginPage extends Page<LoginPage> {
 
     public LoginPage(WebDriver wd) {
         super(wd);
+        this.header = new Header(wd);
     }
 
-    public String getLoginUrlPart() {
+    public static String getLoginUrlPart() {
         return loginUrlPart;
     }
 
@@ -69,4 +77,8 @@ public class LoginPage extends Page<LoginPage> {
     }
 
 
+    public LoginPage waitForPageLoaded() {
+        waitForElementClickable(userField);
+        return this;
+    }
 }

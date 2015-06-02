@@ -1,7 +1,9 @@
 package com.gl.training;
 
+import com.gl.training.utils.web.WebDriverController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -12,7 +14,7 @@ import java.util.Date;
 public class BaseTestNG {
 
     protected final Logger log = LogManager.getLogger(this);
-    protected FirefoxDriver driver = null;
+    protected WebDriver driver = null;
 
     protected String text = "asdfga";
     protected String alphaNum = "2TEst42";
@@ -29,7 +31,7 @@ public class BaseTestNG {
 
     @BeforeClass
     public void startDriver(){
-        driver = new FirefoxDriver();
+        driver = WebDriverController.getDriver();
         setUniqueName();
     }
 
