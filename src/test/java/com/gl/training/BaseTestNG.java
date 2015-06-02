@@ -23,6 +23,7 @@ public class BaseTestNG {
     protected String emptyText = "";
     protected String startsFromSpace = "  11Dd";
     protected String localizationText = "АукцЫон";
+    private String validEmail = "a@b.com";
 
     private String uniqueName;
 
@@ -45,6 +46,14 @@ public class BaseTestNG {
 
     public String getUniqueName() {
         return uniqueName;
+
+    private String getUniqueUsername(){
+        Date date = new Date();
+        return "User#"+date;
+    }
+
+    protected void deleteAllCookies() {
+        driver.manage().deleteAllCookies();
     }
 
     @DataProvider
@@ -67,19 +76,17 @@ public class BaseTestNG {
 
     @DataProvider
     public Object[][] positiveSignUpData(){
+        String uniqueName = getUniqueUsername();
         return new Object[][]{
-                {getUniqueName(), anyCharSet, anyCharSet, getUniqueName(), "@", "Sign up with valid data"}
+                {uniqueName, specChar, specChar, uniqueName, validEmail, "Valid sign up"}
         };
     }
 
     @DataProvider
     public Object[][] negativeSignUpData(){
+        String uniqueName = getUniqueUsername();
         return new Object[][]{
-                {alphaNum, alphaNum, alphaNum, alphaNum, alphaNum, "Sign up with invalid data"}
+                {uniqueName, specChar, "", uniqueName, validEmail, "Invalid sign up. Empty confirm password field"}
         };
-    }
-
-    protected void DeleteAllCookies() {
-        driver.manage().deleteAllCookies();
     }
 }

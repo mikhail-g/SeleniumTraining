@@ -1,5 +1,8 @@
 package com.gl.training.pages;
 
+import org.openqa.selenium.WebDriver;
+
+<<<<<<< HEAD
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,7 +38,7 @@ public class SignUpPage extends Page<SignUpPage> {
 
     @Override
     public String getPageURL() {
-        return wd.getCurrentUrl();
+        return getBaseUrl() + getSignUpUrlPart();
     }
 
     @Override
@@ -60,6 +63,10 @@ public class SignUpPage extends Page<SignUpPage> {
     protected void isLoaded() throws Error {
         String url = getPageURL();
         Assert.assertTrue(url.startsWith(getExpectedUrl()), "Expected URL: " + getExpectedUrl() + " actual URL: " + url);
+    }
+
+    public String getSignUpUrlPart() {
+        return signUpUrlPart;
     }
 
     public void submitSignUp(String name, String password, String confirmPassword, String fullName, String email) {

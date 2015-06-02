@@ -6,13 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
-import static com.gl.training.Settings.getBaseUrl;
 import static com.gl.training.utils.CommonOperations.sendKeys;
+import static com.gl.training.utils.DataProvider.getBaseUrl;
 
 public class LoginPage extends Page<LoginPage> {
-
-//    private WebDriver driver;
-
 
     @FindBy(name = "login")
     private WebElement loginForm;
@@ -30,13 +27,17 @@ public class LoginPage extends Page<LoginPage> {
         return getBaseUrl() + loginUrlPart;
     }
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    public LoginPage(WebDriver wd) {
+        super(wd);
+    }
+
+    public String getLoginUrlPart() {
+        return loginUrlPart;
     }
 
     @Override
     public String getPageURL() {
-        return wd.getCurrentUrl();
+        return getBaseUrl() + getLoginUrlPart();
     }
 
     @Override
@@ -66,5 +67,6 @@ public class LoginPage extends Page<LoginPage> {
         Assert.assertTrue(url.equals(getExpectedUrl()), "Expected URL: "+getExpectedUrl()+" actual URL: " + url);
         }catch(Exception e){throw new Error(this.getClass()+" is not loaded");}
     }
+
 
 }

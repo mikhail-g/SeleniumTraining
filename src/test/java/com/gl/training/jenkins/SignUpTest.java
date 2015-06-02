@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.gl.training.Settings.getBaseUrl;
 import static com.gl.training.utils.CommonOperations.log;
 import static com.gl.training.utils.CommonOperations.verifyCurrentUrl;
 import static org.testng.Assert.assertEquals;
@@ -16,9 +15,11 @@ public class SignUpTest extends BaseTestNG {
 
     private SignUpPage signUpPage;
 
+
     private String signUpResultUrl = "http://seltr-kbp1-1.synapse.com:8080/securityRealm/createAccount";
     private String signUpSuccessUrlPart = "/securityRealm/createAccount";
     private String successMessageLocator = "//div[@id='main-panel-content']/h1";
+    private String loginErrorUrlPart = "/loginError";
 
     private String loggedInFullNameLocatorXpath = "//a[@class='model-link inside inverse']/b";
 
@@ -26,7 +27,7 @@ public class SignUpTest extends BaseTestNG {
 
     @BeforeMethod
     public void setUp() {
-        DeleteAllCookies();
+        deleteAllCookies();
         signUpPage = new SignUpPage(driver).get();
     }
 
@@ -35,7 +36,7 @@ public class SignUpTest extends BaseTestNG {
                              String fullName, String email, String logMessage) {
         log.info("Test: " + logMessage);
         signUpPage.submitSignUp(name, password, confirmPassword, fullName, email);
-        verifyCurrentUrl(driver, signUpResultUrl);
+        verifyCurrentUrl(driver, signUpPage.getPageURL());
         WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel-content']/div"));
         String actualErrorMessage = (txtErrorMessage.getText().split("\n"))[0];
         assertEquals(actualErrorMessage, expectedErrorMessage,
@@ -46,9 +47,8 @@ public class SignUpTest extends BaseTestNG {
     public void positiveTest(String name, String password, String confirmPassword,
                              String fullName, String email, String logMessage) {
         log.info("Test: " + logMessage);
-
         signUpPage.submitSignUp(name, password, confirmPassword, fullName, email);
-        verifyCurrentUrl(driver, signUpResultUrl);
+        verifyCurrentUrl(driver, signUpPage.getPageURL());
     }
 
 }

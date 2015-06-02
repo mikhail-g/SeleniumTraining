@@ -7,17 +7,15 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.gl.training.Settings.getBaseUrl;
 import static com.gl.training.utils.CommonOperations.log;
 import static com.gl.training.utils.CommonOperations.verifyCurrentUrl;
+import static com.gl.training.utils.DataProvider.getBaseUrl;
 import static org.testng.Assert.assertEquals;
 
 public class LoginTest extends BaseTestNG {
 
     private LoginPage loginPage;
-
     private String loginErrorUrlPart = "/loginError";
-
     private String loginSuccessUrlPart = "/securityRealm/createAccount";
     private String loggedInFullNameLocatorXpath = "//a[@class='model-link inside inverse']/b";
     String expectedErrorMessage = "Invalid login information. Please try again.";
@@ -25,7 +23,7 @@ public class LoginTest extends BaseTestNG {
 
     @BeforeMethod
     public void setUp(){
-        DeleteAllCookies();
+        deleteAllCookies();
         loginPage = new LoginPage(driver).get();
     }
 
@@ -43,7 +41,7 @@ public class LoginTest extends BaseTestNG {
 
     @Test(dataProvider = "positiveLoginData")
     public void positiveTest(String name, String password, String logMessage){
-        log("Test: "+logMessage);
+        log.info(logMessage);
         loginPage.submitLogin(name, password);
         verifyCurrentUrl(driver, getBaseUrl() + loginSuccessUrlPart);
     }

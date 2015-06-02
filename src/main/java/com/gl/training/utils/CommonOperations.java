@@ -1,6 +1,5 @@
 package com.gl.training.utils;
 
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -14,16 +13,14 @@ public class CommonOperations {
                 "Current URL is: '" + currentUrl + "', but expected URL is: '" + expectedUrl + "'!");
     }
 
-    public static void log(String message){
-        System.out.println("[info]: " + message);
-    }
-
     public static WebElement sendKeys(WebElement we, String text){
         return sendKeys(we, text, true);
     }
 
-    public static WebElement sendKeys(WebElement we, String text, boolean doClear){
-        if (doClear){we.clear();}
+    public static WebElement sendKeys(WebElement we, String text, boolean doClear) {
+        if (doClear) {
+            we.clear();
+        }
         we.sendKeys(text);
         return we;
     }
