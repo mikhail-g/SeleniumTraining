@@ -1,7 +1,13 @@
 package com.gl.training.utils;
 
-/**
- * Created by Вождь on 2015-06-01.
- */
+
 public class DataProvider {
+
+    private static final String baseUrl = "http://seltr-kbp1-1.synapse.com:8080";
+
+    public static final int Pause = 10;
+
+    public static String getBaseUrl() {
+        return baseUrl;
+    }
 }

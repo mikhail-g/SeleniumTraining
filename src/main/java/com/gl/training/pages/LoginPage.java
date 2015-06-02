@@ -1,8 +1,5 @@
 package com.gl.training.pages;
 
-import com.gl.training.pages.Page;
-import com.gl.training.utils.CommonOperations;
-import com.gl.training.utils.DataProvider;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,7 +38,8 @@ public class LoginPage extends Page {
 
     }
 
-    public void submitLogin(String name, String password) {
+    public void submitLogin(String name, String password){
+        log.info("Try to submit login with name: '"+name+"', password: '"+password+"'");
         sendKeys(userField, name);
         sendKeys(passwordField, password);
         loginForm.submit();
