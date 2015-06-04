@@ -43,7 +43,7 @@ public class LoginTest extends BaseTestNG {
     public void positiveTest(String name, String password, String logMessage){
         log.info(logMessage);
         loginPage.submitLogin(name, password);
-        verifyCurrentUrl(driver, getBaseUrl() + loginSuccessUrlPart);
+        verifyCurrentUrl(driver, getBaseUrl());
     }
 
 }

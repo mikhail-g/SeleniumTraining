@@ -26,6 +26,7 @@ public class BaseTestNG {
     protected String startsFromSpace = "  11Dd";
     protected String localizationText = "АукцЫон";
     private String validEmail = "a@b.com";
+    private String admin = "admin";
 
     private String uniqueName;
 
@@ -58,7 +59,7 @@ public class BaseTestNG {
     @DataProvider
     public Object[][] positiveLoginData(){
         return new Object[][]{
-                {getUniqueName(), anyCharSet, "All allowed characters validation"}
+                {admin, admin, "All allowed characters validation"}
         };
     }
 

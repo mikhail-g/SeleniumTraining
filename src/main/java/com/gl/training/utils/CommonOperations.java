@@ -9,6 +9,9 @@ public class CommonOperations {
 
     public static void verifyCurrentUrl(WebDriver driver, String expectedUrl){
         String currentUrl = driver.getCurrentUrl();
+        if (currentUrl.length() > 0 && currentUrl.charAt(currentUrl.length()-1)=='/') {
+            currentUrl = currentUrl.substring(0, currentUrl.length()-1);
+        }
         assertEquals(currentUrl, expectedUrl,
                 "Current URL is: '" + currentUrl + "', but expected URL is: '" + expectedUrl + "'!");
     }

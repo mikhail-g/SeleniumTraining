@@ -7,7 +7,7 @@
         <classes>
             <class name="com.gl.training.jenkins.SignUpTest">
                 <methods>
-                    <exclude name="negativeTest"/>
+                    <!--<exclude name="negativeTest"/>-->
                 </methods>
             </class>
         </classes>
