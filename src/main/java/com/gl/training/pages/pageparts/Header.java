@@ -1,6 +1,10 @@
 package com.gl.training.pages.pageparts;
 
 
+import com.gl.training.entities.User;
+import com.gl.training.pages.UserProfilePage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +20,7 @@ import static com.gl.training.utils.CommonOperations.sendKeys;
 
 public class Header {
 
+    protected final Logger log = LogManager.getLogger(this);
     WebDriver driver;
 
     @FindBy(name = "search")
@@ -37,9 +42,17 @@ public class Header {
         return this;
     }
 
-    public void submitTextToSearch(String text){
+
+    /**Opens User Profile Page by entering username of existing user
+     * into search field in the page header
+     *
+     * @param text username of existing user
+     * @return UserProfilePage
+     */
+    public UserProfilePage submitTextToSearch(String text){
         enterTextToSearch(text);
         searchForm.submit();
+        return new UserProfilePage(driver, new User(text, text));
     }
 
     private WebElement getSearchResult(String searchedText){
@@ -50,7 +63,16 @@ public class Header {
                 return element;
             }
         }
+        log.warn("There is no result with text: '" + searchedText + "' among " + results.size() + " results");
         return null;
+    }
+
+    public UserProfilePage clickSearchResult(String textToSearch, String resultText){
+        submitTextToSearch(textToSearch);
+        WebElement webElement = getSearchResult(resultText);
+        assert webElement != null;
+        webElement.click();
+        return new UserProfilePage(driver, new User(resultText, resultText));
     }
 
 //    public Header search(String test){
