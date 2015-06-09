@@ -16,9 +16,16 @@ public class HomePage extends Page<HomePage>{
     @FindBy(className = "dashboard")
     private WebElement dashboard;
 
+    @FindBy(xpath = "//a[contains(@href, '/manage')]")
+    private WebElement manageJenkinsMenuButton;
+
     public HomePage(WebDriver wd) {
         super(wd);
         this.header = new Header(wd);
+    }
+
+    public void openManageJenkinsPage(){
+        manageJenkinsMenuButton.click();
     }
 
     public Header getHeader() {

@@ -5,6 +5,7 @@ import com.gl.training.entities.User;
 import com.gl.training.pages.UserProfilePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,7 +24,13 @@ public class Header {
     protected final Logger log = LogManager.getLogger(this);
     WebDriver driver;
 
-    @FindBy(name = "search")
+    private static final String locator = "//div";
+    private static final String loc2 = locator+"[1]";
+
+    @FindBy(xpath = locator)
+    List<WebElement> listOfOptions;
+
+    @FindBy(name = loc2)
     private WebElement searchForm;
 
     @FindBy(id = "search-box")
@@ -35,6 +42,15 @@ public class Header {
     public Header(WebDriver driver){
         this.driver=driver;
         PageFactory.initElements(driver, this);
+    }
+
+    public Header selectAllOptiosForUser(String userName) {
+        List<WebElement> elements = driver.findElements(By.cssSelector(String.format("tr[name='%s'] > td", userName)));
+        elements
+                .stream()
+                .filter(el -> el.getText().isEmpty())
+                .forEach(WebElement::click);
+        return this;
     }
 
     public Header enterTextToSearch(String text){

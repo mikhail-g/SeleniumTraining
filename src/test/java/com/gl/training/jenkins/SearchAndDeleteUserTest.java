@@ -27,15 +27,17 @@ public class SearchAndDeleteUserTest extends BaseTestNG{
 
     @Test
     public void deleteUser(){
-        LoginPage loginPage = new LoginPage(driver).get();
-        loginPage.submitLogin(getAdminUser());
+        for (int i = 0; i < 20; i++) {
+            LoginPage loginPage = new LoginPage(driver).get();
+            loginPage.submitLogin(getAdminUser());
 
-        log.info("Try to open profile of created users");
-        UserProfilePage userProfilePage = loginPage.getHeader().clickSearchResult("User", "User#");
-        userProfilePage.checkUniqueElements();
-        log.info("Try to delete created users");
-        UserProfileDeletePage userProfileDeletePage = userProfilePage.clickDelete();
-        HomePage homePage = userProfileDeletePage.submitDeletion();
-        homePage.checkUniqueElements();
+            log.info("Try to open profile of created users");
+            UserProfilePage userProfilePage = loginPage.getHeader().clickSearchResult("User", "User#");
+            userProfilePage.checkUniqueElements();
+            log.info("Try to delete created users");
+            UserProfileDeletePage userProfileDeletePage = userProfilePage.clickDelete();
+            HomePage homePage = userProfileDeletePage.submitDeletion();
+            homePage.checkUniqueElements();
+        }
     }
 }
