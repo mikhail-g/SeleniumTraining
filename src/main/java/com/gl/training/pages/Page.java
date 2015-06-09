@@ -43,4 +43,25 @@ public abstract class Page<T extends Page<T>> extends LoadableComponent<T> {
         WebDriverWait wait = new WebDriverWait(wd, Pause);
         return wait.until(ExpectedConditions.elementToBeClickable(webElement));
     }
+
+    protected void sleep(Integer pause) {
+        try {
+            Thread.sleep(pause * 1000);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+//    public WebElement waitForElementPresent(WebElement we){
+//        try {
+//            WebDriverWait wait = new WebDriverWait(wd, 10);
+//            wait.until(ExpectedConditions.presenceOfElementLocated(byLocator(locator)));
+//            wait.until(ExpectedConditions.visibilityOfElementLocated(byLocator(locator)));
+//            wait.until(ExpectedConditions.elementToBeClickable(byLocator(locator)));
+//        } catch (Exception e) {
+//            throw e;
+//        }
+//        return we;
+//    }
+
+
 }

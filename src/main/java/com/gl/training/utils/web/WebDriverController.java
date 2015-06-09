@@ -17,6 +17,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.internal.ElementScrollBehavior;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,4 +113,7 @@ public final class WebDriverController {
         wd.manage().window().maximize();
         return wd;
     }
+
+//    AbstractWebDriverEventListener listener = new AbstractWebDriverEventListener() {
+//    }
 }

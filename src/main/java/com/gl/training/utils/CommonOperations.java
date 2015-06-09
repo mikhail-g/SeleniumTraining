@@ -27,4 +27,6 @@ public class CommonOperations {
         we.sendKeys(text);
         return we;
     }
+
+
 }

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import static org.testng.Assert.assertTrue;
+
 public class UserProfilePage extends Page<UserProfilePage> {
     private User user;
 
@@ -24,6 +26,10 @@ public class UserProfilePage extends Page<UserProfilePage> {
         this.user=user;
     }
 
+    public UserProfilePage(WebDriver wd) {
+        super(wd);
+    }
+
     public UserProfileDeletePage clickDelete() {
         deleteButton.click();
         return new UserProfileDeletePage(wd, user);
@@ -35,7 +41,8 @@ public class UserProfilePage extends Page<UserProfilePage> {
     }
 
     @Override
-    protected void checkUniqueElements() throws Error {
-
+    public void checkUniqueElements() throws Error {
+        assertTrue(userName.isDisplayed());
+        assertTrue(userId.isDisplayed());
     }
 }

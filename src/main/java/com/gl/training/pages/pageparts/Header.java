@@ -59,7 +59,7 @@ public class Header {
         for (int i = 0; i < results.size(); i++) {
             WebElement element = results.iterator().next();
             String text = element.getText();
-            if(text.equals(searchedText)){
+            if(text.contains(searchedText)){
                 return element;
             }
         }
@@ -68,11 +68,15 @@ public class Header {
     }
 
     public UserProfilePage clickSearchResult(String textToSearch, String resultText){
-        submitTextToSearch(textToSearch);
-        WebElement webElement = getSearchResult(resultText);
-        assert webElement != null;
-        webElement.click();
-        return new UserProfilePage(driver, new User(resultText, resultText));
+        enterTextToSearch(textToSearch);
+        WebElement searchResultItem = getSearchResult(resultText);
+        if (searchResultItem == null) throw
+                new AssertionError("No item found for text: '"+resultText+"' in search results drop-down");
+        String name = searchResultItem.getText();
+        searchResultItem.click();
+        searchForm.submit();
+        log.info("Try to open profile of users with name: '"+name+"'");
+        return new UserProfilePage(driver);
     }
 
 //    public Header search(String test){

@@ -10,6 +10,7 @@
                     <!--<exclude name="negativeTest"/>-->
                 </methods>
             </class>
+            <class name="com.gl.training.jenkins.LoginTest"/>
         </classes>
     </test>
 </suite>
