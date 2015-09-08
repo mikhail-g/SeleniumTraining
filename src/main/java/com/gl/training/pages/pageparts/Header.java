@@ -6,11 +6,8 @@ import com.gl.training.pages.UserProfilePage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -30,7 +27,7 @@ public class Header {
     @FindBy(xpath = locator)
     List<WebElement> listOfOptions;
 
-    @FindBy(name = loc2)
+    @FindBy(name = "search")
     private WebElement searchForm;
 
     @FindBy(id = "search-box")
