@@ -42,7 +42,7 @@ public class SignUpTest extends BaseTestNG {
         log.info("Test: " + logMessage);
         signUpPage.submitSignUp(user, confirmPassword);
         verifyCurrentUrl(driver, getBaseUrl()+negativeSignUpUrlPart);
-        WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel-content']/div"));
+        WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel']/div/div"));
         String actualErrorMessage = (txtErrorMessage.getText().split("\n"))[0];
         assertEquals(actualErrorMessage, expectedErrorMessage,
                 "Error message is: '" + actualErrorMessage + "', but expected: '" + expectedErrorMessage + "'!");

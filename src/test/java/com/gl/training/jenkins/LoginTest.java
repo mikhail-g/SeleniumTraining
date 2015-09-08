@@ -32,7 +32,7 @@ public class LoginTest extends BaseTestNG {
         log.info("Test: " + logMessage);
         loginPage.submitLogin(name, password);
         verifyCurrentUrl(driver, getBaseUrl() + loginErrorUrlPart);
-        WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel-content']/div"));
+        WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel']/div[1]"));
         String actualErrorMessage = (txtErrorMessage.getText().split("\n"))[0];
 
         assertEquals(actualErrorMessage, expectedErrorMessage,

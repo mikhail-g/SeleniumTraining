@@ -1,16 +1,17 @@
 package com.gl.training.utils;
 
 
+import com.gl.training.Settings;
 import com.gl.training.entities.User;
 
 public class DataProvider {
 
-    private static final String baseUrl = "http://seltr-kbp1-1.synapse.com:8080";
+//    private static final String baseUrl = "http://seltr-kbp1-1.synapse.com:8080";
 
     public static final int Pause = 10;
 
     public static String getBaseUrl() {
-        return baseUrl;
+        return Settings.getBaseUrl();
     }
 
     private static User adminUser;
