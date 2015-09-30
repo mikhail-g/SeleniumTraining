@@ -29,4 +29,51 @@ public class CommonOperations {
     }
 
 
+    public static String formatFileSize(long size) {
+        String hrSize;
+
+        long b = size;
+        long k = size/1024;
+        long m = ((size/1024)/1024);
+        long g = (((size/1024)/1024)/1024);
+        long t = ((((size/1024)/1024)/1024)/1024);
+
+        if ( t>1 ) {
+            hrSize = t + " TB";
+        } else if ( g>1 ) {
+            hrSize = g + " GB";
+        } else if ( m>1 ) {
+            hrSize = m + " MB";
+        } else if ( k>1 ) {
+            hrSize = k + " KB";
+        } else {
+            hrSize = b + " B";
+        }
+
+        return hrSize;
+    }
+
+    public static String formatFileSize1(long size) {
+        String hrSize;
+
+        long b = size;
+        long k = size/1024;
+        double m = ((size/1024)/1024.0);
+        double g = (((size/1024)/1024)/1024.0);
+        double t = ((((size/1024)/1024)/1024)/1024.0);
+
+        if ( t>1 ) {
+            hrSize = t + " TB";
+        } else if ( g>1 ) {
+            hrSize = g + " GB";
+        } else if ( m>1 ) {
+            hrSize = m + " MB";
+        } else if ( k>1 ) {
+            hrSize = k + " KB";
+        } else {
+            hrSize = b + " B";
+        }
+
+        return hrSize;
+    }
 }

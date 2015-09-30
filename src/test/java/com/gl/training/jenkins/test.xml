@@ -2,15 +2,25 @@
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite parallel="false" name="Custom suite">
-    <test name="SeleniumTraining" annotations="JDK" verbose="1">
+<!--    <test name="SeleniumTraining" annotations="JDK" verbose="1">
 
         <classes>
             <class name="com.gl.training.jenkins.SignUpTest">
                 <methods>
-                    <!--<exclude name="negativeTest"/>-->
+                    &lt;!&ndash;<exclude name="negativeTest"/>&ndash;&gt;
                 </methods>
             </class>
             <class name="com.gl.training.jenkins.LoginTest"/>
+        </classes>
+    </test>-->
+    <test name="xmlTest">
+        <classes>
+            <class name="com.gl.training.jenkins.TestNGTest">
+                <methods>
+                    <exclude name="test2"/>
+                    <include name="none"/>
+                </methods>
+            </class>
         </classes>
     </test>
 </suite>
