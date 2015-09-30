@@ -36,7 +36,7 @@ public class BaseTestNG {
         setUniqueName();
     }
 
-    @AfterClass
+    @AfterClass(alwaysRun = true)
     public void shutDown(){
         driver.quit();
     }

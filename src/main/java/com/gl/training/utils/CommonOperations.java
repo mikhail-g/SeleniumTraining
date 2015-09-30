@@ -76,4 +76,12 @@ public class CommonOperations {
 
         return hrSize;
     }
+    
+    public static void sleep() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

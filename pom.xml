@@ -10,6 +10,8 @@
     <description>Project template for GL Training course</description>
 
     <properties>
+        <suiteXmlFile>test.xml</suiteXmlFile>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -104,6 +106,9 @@
                         <log4j.configurationFile>log4j.xml</log4j.configurationFile>
                         <file.encoding>${project.build.sourceEncoding}</file.encoding>
                     </systemPropertyVariables>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
 

@@ -3,6 +3,7 @@ package com.gl.training.jenkins;
 import com.gl.training.BaseTestNG;
 import com.gl.training.entities.User;
 import com.gl.training.pages.*;
+import com.gl.training.utils.CommonOperations;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
@@ -11,6 +12,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.gl.training.utils.CommonOperations.sleep;
 import static com.gl.training.utils.CommonOperations.verifyCurrentUrl;
 import static com.gl.training.utils.DataProvider.getAdminUser;
 import static com.gl.training.utils.DataProvider.getBaseUrl;
@@ -42,7 +44,7 @@ public class SignUpTest extends BaseTestNG {
         log.info("Test: " + logMessage);
         signUpPage.submitSignUp(user, confirmPassword);
         verifyCurrentUrl(driver, getBaseUrl()+negativeSignUpUrlPart);
-        WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel-content']/div"));
+        WebElement txtErrorMessage = driver.findElement(By.xpath("//div[@id='main-panel']/div/div"));
         String actualErrorMessage = (txtErrorMessage.getText().split("\n"))[0];
         assertEquals(actualErrorMessage, expectedErrorMessage,
                 "Error message is: '" + actualErrorMessage + "', but expected: '" + expectedErrorMessage + "'!");
@@ -60,13 +62,15 @@ public class SignUpTest extends BaseTestNG {
     public void deleteUser(){
         LoginPage loginPage = new LoginPage(driver).get();
         loginPage.submitLogin(getAdminUser());
-        for (int i = 0; i < createdUsers.size(); i++) {
-            User user = createdUsers.iterator().next();
-                    log.info("Try to delete created users");
-            signUpPage.getHeader().submitTextToSearch(user.getName());
+        for (User user : createdUsers) {
+            String userName = user.getName();
+            log.info("Try to delete created user with name: "+userName);
+            signUpPage.getHeader().submitTextToSearch(userName);
             UserProfilePage userProfilePage = new UserProfilePage(driver, user);
             UserProfileDeletePage userProfileDeletePage = userProfilePage.clickDelete();
+//            sleep();
             HomePage homePage = userProfileDeletePage.submitDeletion();
+//            sleep();
             homePage.checkUniqueElements();
         }
     }
